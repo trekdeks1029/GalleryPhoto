@@ -62,14 +62,14 @@ class PhotoListFragment : BaseListFragment<Photo, AListAdapter.DefaultViewHolder
 
                 if (ContextCompat.checkSelfPermission(
                         activity!!,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     startSelectPhoto(it)
                 } else {
                     ActivityCompat.requestPermissions(
                         activity!!,
-                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                         PERMISSION_WRITE
                     )
                 }

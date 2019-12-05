@@ -31,7 +31,7 @@ class PhotoGridItemView @JvmOverloads constructor(
     override fun loadImage(photo: Photo) {
         Glide.with(context)
             .asBitmap()
-            .load(photo.small)
+            .load(photo.large)
             .override(400, 400)
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
