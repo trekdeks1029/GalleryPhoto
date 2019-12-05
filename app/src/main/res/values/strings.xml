@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GalleryPhoto</string>
+    <string name="view_empty_default_text">Пока что здесь пусто</string>
+
+
+    <string name="error_network_lost">Ошибка! Нет интернет соединения!</string>
+    <string name="photo">Photo</string>
+</resources>
