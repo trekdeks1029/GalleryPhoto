@@ -81,59 +81,70 @@ class PhotoListFragment : BaseListFragment<Photo, AListAdapter.DefaultViewHolder
     }
 
     private fun startSelectPhoto(photo: Photo) {
-        Glide.with(this)
-            .asBitmap()
-            .load(photo.large)
-            .override(1000)
-            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-            .into(object : CustomTarget<Bitmap>() {
-                override fun onLoadCleared(placeholder: Drawable?) {
+        startActivity(Intent().apply {
+            action = Intent.ACTION_VIEW
+            setDataAndType(Uri.parse(photo.large), "image/*")
+        })
 
-                }
+        /*
+Glide.with(this)
+        .asBitmap()
+        .load(photo.large)
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        .into(object : CustomTarget<Bitmap>() {
+            override fun onLoadCleared(placeholder: Drawable?) {
 
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    val uri = FilesUtil().getImageUri(activity!!, resource)!!
-                    startActivity(Intent().apply {
-                        action = Intent.ACTION_VIEW
-                        setDataAndType(Uri.parse(uri.toString()), "image/*")
-                    })
-                }
-            })
-    }
+            }
 
-    override fun initLayoutManager(): RecyclerView.LayoutManager {
-        val layout = GridLayoutManager(context, 3)
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                val uri = FilesUtil().getImageUri(activity!!, resource)!!
+                startActivity(Intent().apply {
+                    action = Intent.ACTION_VIEW
+                    setDataAndType(Uri.parse(uri.toString()), "image/*")
+                })
+            }
+        })
 
-        rvList.addItemDecoration(GridSpacingItemDecoration(3, 10, true))
 
-        return layout
-    }
-
-    override fun showPhotos(list: MutableList<Photo>) {
-        (adapter as PhotoListAdapter).setDataAll(list)
-        showEmptyView(list.isEmpty())
+ */
+ */
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if (resultCode == RESULT_OK && data != null) {
-            when (requestCode) {
-                RESULT_ADD -> {
-                    presenter.clearData()
-                }
+override fun initLayoutManager(): RecyclerView.LayoutManager {
+    val layout = GridLayoutManager(context, 3)
+
+    rvList.addItemDecoration(GridSpacingItemDecoration(3, 10, true))
+
+    return layout
+}
+
+override fun showPhotos(list: MutableList<Photo>) {
+    (adapter as PhotoListAdapter).setDataAll(list)
+    showEmptyView(list.isEmpty())
+}
+
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+    if (resultCode == RESULT_OK && data != null) {
+        when (requestCode) {
+            RESULT_ADD -> {
+                presenter.clearData()
             }
         }
-
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
-    companion object {
-        const val RESULT_ADD = 29
-        const val PERMISSION_WRITE = 100
+    super.onActivityResult(requestCode, resultCode, data)
+}
 
-        fun getInstance(): PhotoListFragment {
-            return PhotoListFragment()
-        }
+companion object {
+    const val RESULT_ADD = 29
+    const val PERMISSION_WRITE = 100
+
+    fun getInstance(): PhotoListFragment {
+        return PhotoListFragment()
     }
+}
 }
